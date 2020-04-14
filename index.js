@@ -12,9 +12,10 @@ const sound = document.querySelector('.sound');
 icon.addEventListener('click', () => {
     sound.play();
     dictate();
+
   });
 
-
+  
 const dictate = () => {
     console.log("RECOGNITION STARTED");
     recognition.start();
@@ -24,5 +25,25 @@ const dictate = () => {
         paragraph.textContent = speechToText;
         document.getElementById("listen-tag").classList.add('hidden');
         console.log("RECOGNITION ENDED");
+
+        analyzeSentiment(speechToText);
     }
 }
+
+const analyzeSentiment = (text) => {
+    // Create a new Sentiment method
+    const sentiment = ml5.sentiment('movieReviews', modelReady);
+
+    // When the model is loaded
+    function modelReady() {
+        // model is ready
+        console.log('Model Loaded!');
+
+        // make the prediction
+        const prediction = sentiment.predict(text);
+        console.log(`Sentiment for ${text}: `, prediction);
+    }
+
+    
+}
+
