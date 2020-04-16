@@ -1,13 +1,14 @@
 let heart, lay, fb;
 var counter = 0;
 var rgb = 0;
+const Y_OFFSET = 100;
 
 function preload() {
   heart = loadModel('resources/hort3.obj');
 }
 
 function setup() {
-  createCanvas(600, 600);
+  createCanvas(windowWidth, windowHeight);
   lay = createGraphics(width, height, WEBGL);
   imageMode(CENTER);
 }

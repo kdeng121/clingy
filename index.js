@@ -1,11 +1,7 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
 
 const recognition = new SpeechRecognition();
-// const icon = document.querySelector('i.fa.fa-microphone')
 const icon = document.querySelector('#microphone');
-let paragraph = document.createElement('p');
-let container = document.querySelector('.text-box');
-container.appendChild(paragraph);
 const sound = document.querySelector('.sound');
 
 let score = 2;
@@ -15,7 +11,6 @@ let words = "heart";
 icon.addEventListener('click', () => {
     sound.play();
     dictate();
-
   });
 
   
@@ -24,16 +19,9 @@ const dictate = async() => {
     recognition.start();
     document.getElementById("speech-text-input").value = "Listening...";
 
-    // document.getElementById("listen-tag").classList.remove('hidden');
-
     recognition.onresult = async(event) => {
         const speechToText = event.results[0][0].transcript;
-        // paragraph.textContent = speechToText;
-        // words = paragraph.textContent;
-
         document.getElementById("speech-text-input").value = speechToText;
-
-        // document.getElementById("listen-tag").classList.add('hidden');
         console.log("RECOGNITION ENDED");
 
         //ml5
