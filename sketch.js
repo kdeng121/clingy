@@ -21,7 +21,6 @@ function draw() {
   counter++;
 
   // setup heart layer
-  lay.orbitControl;
   lay.reset();
   lay.clear();
 
@@ -29,8 +28,9 @@ function draw() {
   if (frameCount % 80 == 0) lay.scale(-33);
   else lay.scale(-27);
 
-  lay.orbitControl();
   lay.rotateY(radians(frameCount))
+  if (score.score > 0.9) rgb = 255;
+  else rgb = 0;
   lay.stroke(255 - rgb, rgb, 0);
   lay.fill(0, 0);
   background(0, 20)
