@@ -22,12 +22,18 @@ icon.addEventListener('click', () => {
 const dictate = async() => {
     console.log("RECOGNITION STARTED");
     recognition.start();
-    document.getElementById("listen-tag").classList.remove('hidden');
+    document.getElementById("speech-text-input").value = "Listening...";
+
+    // document.getElementById("listen-tag").classList.remove('hidden');
+
     recognition.onresult = async(event) => {
         const speechToText = event.results[0][0].transcript;
-        paragraph.textContent = speechToText;
-        words = paragraph.textContent;
-        document.getElementById("listen-tag").classList.add('hidden');
+        // paragraph.textContent = speechToText;
+        // words = paragraph.textContent;
+
+        document.getElementById("speech-text-input").value = speechToText;
+
+        // document.getElementById("listen-tag").classList.add('hidden');
         console.log("RECOGNITION ENDED");
 
         //ml5

@@ -7,7 +7,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(600, 600);
   lay = createGraphics(width, height, WEBGL);
   imageMode(CENTER);
 }
