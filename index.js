@@ -8,6 +8,9 @@ let container = document.querySelector('.text-box');
 container.appendChild(paragraph);
 const sound = document.querySelector('.sound');
 
+let score = 2;
+let words = "heart";
+
 
 icon.addEventListener('click', () => {
     sound.play();
@@ -23,6 +26,7 @@ const dictate = async() => {
     recognition.onresult = async(event) => {
         const speechToText = event.results[0][0].transcript;
         paragraph.textContent = speechToText;
+        words = paragraph.textContent;
         document.getElementById("listen-tag").classList.add('hidden');
         console.log("RECOGNITION ENDED");
 
@@ -32,7 +36,9 @@ const dictate = async() => {
         //tensorflow
         console.log("running prediction")
         const predictor = await new SentimentPredictor().init(HOSTED_URLS);
-        console.log(predictor.predict(speechToText))
+    
+        score = predictor.predict(speechToText);
+        console.log(score);
     }
 }
 
