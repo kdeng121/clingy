@@ -41,7 +41,7 @@ function draw() {
     else if (colorFSM == 1){ // need to go from 255,0,255 to 0, 255, 255
       r--;
       g++;
-      if (g == 255) colorFSM = 2; // go forward
+      if (g == 255) colorFSM = 2;
     }
     else if (colorFSM == 2){ // need to go from 0, 255,255 to 255,0,255
       g--;
@@ -52,7 +52,6 @@ function draw() {
       b--;
       g++;
       if (g == 255) colorFSM = 0;
-      
     }
   }
   else if (score >= 0.6){ // positive
@@ -62,9 +61,9 @@ function draw() {
     b = 0;
   }
   else if (score >= 0.3 && score < 0.6){ // neutral
-    r = score*random(0,255);
-    g = score*random(0,255);
-    b = score*random(0,255);
+    r = 255;
+    g = 255;
+    b = 0;
     score = 2;
   }
   else if (score < 0.3){ // negative
@@ -80,11 +79,6 @@ function draw() {
 
   lay.stroke(r,g,b);
   console.log(score);
-  // if (score.score > 0.9) rgb = 255;
-  // else rgb = 0;
-  // lay.stroke(255 - rgb, rgb, 0);
-
-
   lay.fill(0, 0);
   background(0, 20)
   translate(width / 2, height / 2)
