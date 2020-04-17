@@ -44,8 +44,8 @@ const dictate = async() => {
       //tensorflow
       console.log("running prediction")
       const predictor = await new SentimentPredictor().init(HOSTED_URLS);
-  
-      score = predictor.predict(speechToText);
+      words = speechToText;
+      score = predictor.predict(speechToText).score;
       console.log(score);
     }
 
