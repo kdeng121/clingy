@@ -15,7 +15,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   lay = createGraphics(width, height, WEBGL);
   bg = createGraphics(width, height, WEBGL);
-  bgs = createGraphics(width, height, WEBGL);
   imageMode(CENTER);
 }
 
