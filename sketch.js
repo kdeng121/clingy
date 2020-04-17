@@ -1,11 +1,11 @@
 let heart, lay, fb;
 var counter = 0;
 var rgb = 0;
-var r = 0;
-var g = 0;
+var r = 255;
+var g = 255;
 var b = 0;
-var decreasingColorFlag = "";
 var bpm =0;
+var colorFSM = 0;
 
 function preload() {
   heart = loadModel('resources/hort3.obj');
@@ -15,9 +15,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   lay = createGraphics(width, height, WEBGL);
   imageMode(CENTER);
-  r = random(0,255);
-  g = random(0,255);
-  b = random(0,255);  
 }
 
 function draw() { 
@@ -32,44 +29,53 @@ function draw() {
   lay.reset();
   lay.clear();
 
-  // heart color and drawing
+  // heart color and bpm
   lay.rotateY(radians(frameCount));
-
   if (score == 2){
-    bpm = 0.5;
-    if (decreasingColorFlag == true){
-      r--;
+    bpm = 80;
+    if (colorFSM == 0){ // need to go from 255,255,0 to 255,0,255
       g--;
-      b--;
-      if (r <= 0 || g <= 0 || b <= 0) decreasingColorFlag = false;
-    }
-    else{
-      r++;
-      g++;
       b++;
-      if (r >= 255 || g >= 255 || b >= 255) decreasingColorFlag = true;
-    } 
+      if (b == 255) colorFSM = 1;
+    }
+    else if (colorFSM == 1){ // need to go from 255,0,255 to 0, 255, 255
+      r--;
+      g++;
+      if (g == 255) colorFSM = 2; // go forward
+    }
+    else if (colorFSM == 2){ // need to go from 0, 255,255 to 255,0,255
+      g--;
+      r++;
+      if (r == 255) colorFSM = 3;
+    }
+    else if (colorFSM == 3){ // need to go from 255,0,255 to 255,255,0
+      b--;
+      g++;
+      if (g == 255) colorFSM = 0;
+      
+    }
   }
-  else if (score >= 0.6){
-    bpm = 1-score;
+  else if (score >= 0.6){ // positive
+    bpm = Math.round((1/score)*30);
     r = 0;
     g = 255;
     b = 0;
   }
-  else if (score >= 0.3 && score < 0.6){
+  else if (score >= 0.3 && score < 0.6){ // neutral
     r = score*random(0,255);
     g = score*random(0,255);
     b = score*random(0,255);
     score = 2;
   }
-  else if (score < 0.3){
-    bpm = 1-score;
+  else if (score < 0.3){ // negative
+    bpm = Math.round(160*(1-score));
     r = 255;
     g = 0;
     b = 0;
   }
+
   // heart size
-  if (frameCount % (Math.round(bpm*160)) == 0) lay.scale(-33);
+  if (frameCount % bpm == 0) lay.scale(-33);
   else lay.scale(-27);
 
   lay.stroke(r,g,b);
