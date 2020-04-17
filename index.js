@@ -1,39 +1,54 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
 
 const recognition = new SpeechRecognition();
-const icon = document.querySelector('#microphone');
-const sound = document.querySelector('.sound');
+const startButton = document.querySelector('#microphone');
+const stopButton = document.querySelector('#stop-button');
 
 let score = 2;
 let words = "heart";
+var receivedSpeechFlag;
+var myTimeout;
 
+startButton.onclick = () => {
+  dictate();
+  receivedSpeechFlag = false;
 
-icon.addEventListener('click', () => {
-    sound.play();
-    dictate();
-  });
+  // Set timeout of 10 seconds
+  myTimeout = setTimeout(function(){
+    if (!receivedSpeechFlag) {
+       recognition.stop();   
+       document.getElementById("speech-text-input").value = "Could not recognize speech. Please try again.";
+       console.log("Timed out! Could not recognize speech.");
+    }
+  }, 10000);
+}
 
   
 const dictate = async() => {
     console.log("RECOGNITION STARTED");
     recognition.start();
     document.getElementById("speech-text-input").value = "Listening...";
-
-    recognition.onresult = async(event) => {
-        const speechToText = event.results[0][0].transcript;
-        document.getElementById("speech-text-input").value = speechToText;
-        console.log("RECOGNITION ENDED");
-
-        //ml5
-        // analyzeSentiment(speechToText);
-
-        //tensorflow
-        console.log("running prediction")
-        const predictor = await new SentimentPredictor().init(HOSTED_URLS);
     
-        score = predictor.predict(speechToText);
-        console.log(score);
+    recognition.onresult = async(event) => {
+      // Clear timeout
+      receivedSpeechFlag = true;
+      clearTimeout(myTimeout);
+
+      const speechToText = event.results[0][0].transcript;
+      document.getElementById("speech-text-input").value = speechToText;
+      console.log("RECOGNITION ENDED");
+  
+      //ml5
+      // analyzeSentiment(speechToText);
+  
+      //tensorflow
+      console.log("running prediction")
+      const predictor = await new SentimentPredictor().init(HOSTED_URLS);
+  
+      score = predictor.predict(speechToText);
+      console.log(score);
     }
+
 }
 
 //ml5
