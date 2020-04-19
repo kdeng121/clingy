@@ -47,6 +47,28 @@ const dictate = async() => {
       words = speechToText;
       score = predictor.predict(speechToText).score;
       console.log(score);
+
+      /** Display sentiment score */
+      var roundedScore = (score*100).toFixed(1);
+      document.getElementById("score").innerHTML = "(" + roundedScore + "%)";
+      // Positive
+      if (score >= .6){
+        document.getElementById("sentiment").innerHTML = "POSITIVE";
+        document.getElementById("sentiment").style.color = "green";
+      }
+
+      // Neutral
+      if (score >= .3 && score <.6){
+        document.getElementById("sentiment").innerHTML = "NEUTRAL";
+        document.getElementById("sentiment").style.color = "yellow";
+      }
+
+      // Neutral
+      if (score < .3){
+        document.getElementById("sentiment").innerHTML = "NEGATIVE";
+        document.getElementById("sentiment").style.color = "red";
+
+      }
     }
 
 }

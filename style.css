@@ -1,23 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap');
+
+
 body {
     text-align: center;
     background-color: black;
     color: white;
+    font-family: 'Gochi Hand';
 }
 
-h3 {
-    margin: 1%;
+h4 {
+    margin-top: 1%;
+}
+
+p {
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 0;
 }
 
 
 #speech-text-input {
     width: 50%;
-    margin: 1% auto;
+    margin: 0% auto;
     max-height: 70vh;
-    line-height: 25px;
+    line-height: 20px;
     border: none;
     padding: 1%;
     border-radius: 10px;
-    background-color: lightyellow;
+    background-color:rgb(212, 212, 212);
 }
 
 .listening {
@@ -58,4 +70,8 @@ h3 {
 .speech-container {
     text-align: flex;
     opacity: transparent;
+}
+
+#sentiment {
+    font-weight: bold;
 }

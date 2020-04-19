@@ -25,12 +25,16 @@
   </head>
 
   <body>
-    <h3>How are you feeling today?</h3>
+    <h4>How are you feeling today?</h4>
 
     <div class="speech-container">
       <button id="microphone" type="button inline-display" class="fa fa-microphone microphone-button btn btn-light"></button> 
       <input type="text" id="speech-text-input" disabled placeholder="Click microphone to speak"></input>
-    </div>
+      <p>Sentiment score:
+        <span id="sentiment"></span>
+        <span id="score"></span>
+      </p>
+        
     
     <script src="index.js"></script>
     <script src="sketch.js"></script>
