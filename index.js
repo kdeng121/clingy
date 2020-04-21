@@ -71,6 +71,7 @@ const dictate = async() => {
           words = speechToText;
           score = (data.documentSentiment.score + 1)/2 //convert from -1to1 to 0to1 scale
           console.log("score", score)
+          console.log("about to display sentiment results")
           displaySentimentResults();
         }
       } catch(err){
