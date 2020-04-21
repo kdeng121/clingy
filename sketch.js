@@ -84,6 +84,7 @@ function draw() {
     g = 255;
     b = 0;
     score = 2;
+    colorFSM = 0;
   }
   else if (score < 0.33) { // negative
     bpm = Math.round(160 * (1 - score));
