@@ -73,19 +73,19 @@ function draw() {
       if (g == 255) colorFSM = 0;
     }
   }
-  else if (score >= 0.7) { // positive
+  else if (score >= 0.33) { // positive
     bpm = Math.round((1 / score) * 30);
     r = 0;
     g = 255;
     b = 0;
   }
-  else if (score >= 0.3 && score < 0.7) { // neutral
+  else if (score >= -0.33 && score < 0.33) { // neutral
     r = 255;
     g = 255;
     b = 0;
     score = 2;
   }
-  else if (score < 0.3) { // negative
+  else if (score < -0.33) { // negative
     bpm = Math.round(160 * (1 - score));
     r = 255;
     g = 0;

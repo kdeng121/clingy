@@ -42,15 +42,41 @@ const dictate = async() => {
       //analyzeSentiment(speechToText);
       
       // ml5
-      console.log("Running prediction");
-      const predictor = await ml5.sentiment('movieReviews', () => {
-        words = speechToText;
-        const prediction = predictor.predict(words);
-        score = prediction.score;
-        console.log(`Sentiment for ${words}: `, score);
-        displaySentimentResults();
-      });
+      // console.log("Running prediction");
+      // const predictor = await ml5.sentiment('movieReviews', () => {
+      //   words = speechToText;
+      //   const prediction = predictor.predict(words);
+      //   score = prediction.score;
+      //   console.log(`Sentiment for ${words}: `, score);
+      //   displaySentimentResults();
+      // });
       
+      //google cloud api call
+      console.log("Running prediction")
+      try{
+        const data = await fetch('https://language.googleapis.com/v1/documents:analyzeSentiment?key=AIzaSyBX0e5IHnpb3LJVFTLdDPIE2b583axiZAk',{
+          method: 'post',
+          body: JSON.stringify({
+            "document": {
+              "type": 'PLAIN_TEXT',
+              "content": speechToText
+            },
+            "encodingType": 'UTF8'})
+        }).then(response => response.json());
+        //just in case heh heh
+        console.log(data)
+        if(!data.documentSentiment || data.documentSentiment.score === undefined || data.documentSentiment.score === null){
+          backupSentiment(speechToText);
+        }else{
+          words = speechToText;
+          score = data.documentSentiment.score
+          console.log("score", score)
+        }
+      } catch(err){
+        backupSentiment(speechToText);
+      }
+      
+      // const otherPredictions = await googleSentiment(speechToText);
   
       //tensorflow
       // console.log("running prediction")
@@ -61,24 +87,34 @@ const dictate = async() => {
     }
 }
 
+const backupSentiment = async(speechToText) => {
+  const predictor = await ml5.sentiment('movieReviews', () => {
+    words = speechToText;
+    const prediction = predictor.predict(words);
+    score = prediction.score;
+    console.log(`Sentiment for ${words}: `, score);
+    displaySentimentResults();
+  });
+}
+
 const displaySentimentResults = () => {
   /** Display sentiment score */
   var roundedScore = (score*100).toFixed(1);
   document.getElementById("score").innerHTML = "(" + roundedScore + "%)";
   // Positive
-  if (score >= .7){
+  if (score >= .33){
     document.getElementById("sentiment").innerHTML = "POSITIVE";
     document.getElementById("sentiment").style.color = "green";
   }
 
   // Neutral
-  if (score >= .3 && score <.7){
+  if (score >= -.33 && score <.33){
     document.getElementById("sentiment").innerHTML = "NEUTRAL";
     document.getElementById("sentiment").style.color = "yellow";
   }
 
   // Neutral
-  if (score < .3){
+  if (score < -.33){
     document.getElementById("sentiment").innerHTML = "NEGATIVE";
     document.getElementById("sentiment").style.color = "red";
   }
