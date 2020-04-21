@@ -69,7 +69,7 @@ const dictate = async() => {
           backupSentiment(speechToText);
         }else{
           words = speechToText;
-          score = data.documentSentiment.score
+          score = (data.documentSentiment.score + 1)/2 //convert from -1to1 to 0to1 scale
           console.log("score", score)
         }
       } catch(err){
@@ -102,19 +102,19 @@ const displaySentimentResults = () => {
   var roundedScore = (score*100).toFixed(1);
   document.getElementById("score").innerHTML = "(" + roundedScore + "%)";
   // Positive
-  if (score >= .33){
+  if (score >= .66){
     document.getElementById("sentiment").innerHTML = "POSITIVE";
     document.getElementById("sentiment").style.color = "green";
   }
 
   // Neutral
-  if (score >= -.33 && score <.33){
+  if (score >= .33 && score <.66){
     document.getElementById("sentiment").innerHTML = "NEUTRAL";
     document.getElementById("sentiment").style.color = "yellow";
   }
 
   // Neutral
-  if (score < -.33){
+  if (score < .33){
     document.getElementById("sentiment").innerHTML = "NEGATIVE";
     document.getElementById("sentiment").style.color = "red";
   }
