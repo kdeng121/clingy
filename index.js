@@ -66,13 +66,13 @@ const displaySentimentResults = () => {
   var roundedScore = (score*100).toFixed(1);
   document.getElementById("score").innerHTML = "(" + roundedScore + "%)";
   // Positive
-  if (score >= .6){
+  if (score >= .7){
     document.getElementById("sentiment").innerHTML = "POSITIVE";
     document.getElementById("sentiment").style.color = "green";
   }
 
   // Neutral
-  if (score >= .3 && score <.6){
+  if (score >= .3 && score <.7){
     document.getElementById("sentiment").innerHTML = "NEUTRAL";
     document.getElementById("sentiment").style.color = "yellow";
   }
