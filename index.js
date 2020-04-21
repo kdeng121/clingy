@@ -99,23 +99,28 @@ const backupSentiment = async(speechToText) => {
 }
 
 const displaySentimentResults = () => {
+  console.log("displaying sentiment")
   /** Display sentiment score */
   var roundedScore = (score*100).toFixed(1);
   document.getElementById("score").innerHTML = "(" + roundedScore + "%)";
+  console.log("(" + roundedScore + "%)");
   // Positive
   if (score >= .66){
+    console.log("positive")
     document.getElementById("sentiment").innerHTML = "POSITIVE";
     document.getElementById("sentiment").style.color = "green";
   }
 
   // Neutral
   if (score >= .33 && score <.66){
+    console.log("neutral")
     document.getElementById("sentiment").innerHTML = "NEUTRAL";
     document.getElementById("sentiment").style.color = "yellow";
   }
 
   // Neutral
   if (score < .33){
+    console.log("negative")
     document.getElementById("sentiment").innerHTML = "NEGATIVE";
     document.getElementById("sentiment").style.color = "red";
   }
